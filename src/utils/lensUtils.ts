@@ -21,7 +21,7 @@ export function child<Main, T, K extends keyof T>(lens: LensAndPath<Main, T>, ke
         set: (main: Main, child: T[K]) => {
             const parent = lens.get(main);  // Get the parent object
             if (parent === undefined) return main;  // If the parent is undefined, return the main object unchanged
-            const updatedParent = { ...parent, [key]: child };  // Create a new object with the updated child
+            const updatedParent = {...parent, [key]: child};  // Create a new object with the updated child
             return lens.set(main, updatedParent as T);  // Set the updated parent in the main object
         },
         path: [...lens.path, key.toString()]

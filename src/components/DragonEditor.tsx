@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import InputField from './InputField';
 import {LensAndPath, lensBuilder} from '../utils/lensUtils';
-import { Dragon, dragonData, Color } from '../types/dragonTypes';
+import {Dragon, dragonData, Color} from '../types/dragonTypes';
 import {useLensInput} from "../utils/useLensInput";
+import {useComponents} from "./phil";
 
 // Define lenses for various parts of the dragon
 export const bodyLens = lensBuilder<Dragon>().focusOn('body');
@@ -22,44 +23,22 @@ const DragonEditor = () => {
     const [dragon, setDragon] = useState<Dragon>(dragonData);
 
     // Create a handler to update the dragon state based on the lens and new value
-    const handleLensChange = <T,>(lens: LensAndPath<Dragon, T>, value: T) => {
-        setDragon(lens.set(dragon, value));
-    };
 
-    // Component for handling different types of input fields
-    const LensInputField = <T,>({ lens, type, options }: {
-        lens: LensAndPath<Dragon, T>,
-        type: 'text' | 'number' | 'dropdown',
-        options?: T[] }) => {
-        const { value, onChange } = useLensInput(dragon, lens);
-
-        return (
-            <InputField
-                label={lens.path.join('.')}
-                type={type}
-                value={value}
-                onChange={(newValue) => handleLensChange(lens, newValue)}
-                options={options}
-            />
-        );
-    };
-
+    const {NumberField, StringField, DropdownField} = useComponents(dragon, setDragon)
     return (
         <div>
             <h1>Edit Dragon</h1>
-
             {/* Head Section */}
             <h2>Head</h2>
-            <LensInputField lens={headHitpointsLens} type="number" />
-            <LensInputField lens={leftEyeLens} type="dropdown" options={['blue', 'green'] as Color[]} />
-            <LensInputField lens={rightEyeLens} type="dropdown" options={['blue', 'green'] as Color[]} />
-
+            <NumberField lens={headHitpointsLens}/>
+            <DropdownField lens={leftEyeLens}/>
+            <DropdownField lens={rightEyeLens}/>
             {/* Body Section */}
             <h2>Body</h2>
-            <LensInputField lens={chestHitpointsLens} type="number" />
-            <LensInputField lens={stomachContentsLens} type="text" />
-            <LensInputField lens={leftWingLens} type="number" />
-            <LensInputField lens={rightWingLens} type="number" />
+            <NumberField lens={chestHitpointsLens}/>
+            <StringField lens={stomachContentsLens}/>
+            <NumberField lens={leftWingLens}/>
+            <NumberField lens={rightWingLens}/>
         </div>
     );
 };

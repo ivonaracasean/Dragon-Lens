@@ -28,7 +28,7 @@ export interface Chest {
 }
 
 export interface Stomach {
-    contents: any[];
+    contents: any[] | string;
 }
 
 export interface Wing {
