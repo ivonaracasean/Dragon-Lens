@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
-import InputField from './InputField';
 import {LensAndPath, lensBuilder} from '../utils/lensUtils';
 import {Dragon, dragonData, Color} from '../types/dragonTypes';
-import {useLensInput} from "../utils/useLensInput";
-import {useComponents} from "./phil";
+import {useComponents} from "./InputField";
 
 // Define lenses for various parts of the dragon
 export const bodyLens = lensBuilder<Dragon>().focusOn('body');

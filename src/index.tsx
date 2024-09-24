@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {ComponentProvider, defaultComponentsFn} from "./components/InputField";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+      <ComponentProvider value={defaultComponentsFn}>
+          <App />
+      </ComponentProvider>
   </React.StrictMode>
 );
 
