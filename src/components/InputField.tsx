@@ -55,8 +55,9 @@ const DropdownInputFieldType: InputFieldTypeClass<Color> = {
 };
 
 type changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
-const InputField = <Main, T>(ft: InputFieldTypeClass<T>, main: Main, setMain: (main: Main) => void) => (
-    props: InputFieldProps<Main, T>) => {
+const InputField = <Main, T>(ft: InputFieldTypeClass<T>, main: Main, setMain: (main: Main) => void) =>
+    (props: InputFieldProps<Main, T>) => {
+
     const {lens} = props;
     const handleChange: changeHandler = (e) => setMain(lens.set(main, ft.findTInEvent(e)!));
     const Display = ft.Display
@@ -87,6 +88,7 @@ export const defaultComponentsFn: ComponentFunction<any> = (main, setMain) => ({
     NumberField: InputField(NumberInputFieldType, main, setMain),
     StringField: InputField(StringInputFieldType, main, setMain),
     DropdownField: InputField(DropdownInputFieldType, main, setMain)
+    //DateField: InputField()
 });
 
 export function useComponents<Main>(main: Main, setMain: (main: Main) => void): Components<Main> {
